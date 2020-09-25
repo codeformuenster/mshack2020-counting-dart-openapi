@@ -1,61 +1,27 @@
 library muensterZaehltDartOpenapi.api;
 
-import 'package:dio/dio.dart';
-import 'package:built_value/serializer.dart';
-import 'package:muensterZaehltDartOpenapi/serializers.dart';
-import 'package:muensterZaehltDartOpenapi/auth/api_key_auth.dart';
-import 'package:muensterZaehltDartOpenapi/auth/basic_auth.dart';
-import 'package:muensterZaehltDartOpenapi/auth/oauth.dart';
-import 'package:muensterZaehltDartOpenapi/api/default_api.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
+
+part 'api_client.dart';
+part 'api_helper.dart';
+part 'api_exception.dart';
+part 'auth/authentication.dart';
+part 'auth/api_key_auth.dart';
+part 'auth/oauth.dart';
+part 'auth/http_basic_auth.dart';
+part 'auth/http_bearer_auth.dart';
+
+part 'api/default_api.dart';
+
+part 'model/count_parameter.dart';
+part 'model/http_validation_error.dart';
+part 'model/ttnhttp_integration_parameter.dart';
+part 'model/ttn_payload_fields.dart';
+part 'model/validation_error.dart';
 
 
-final _defaultInterceptors = [OAuthInterceptor(), BasicAuthInterceptor(), ApiKeyAuthInterceptor()];
-
-class MuensterZaehltDartOpenapi {
-
-    Dio dio;
-    Serializers serializers;
-    String basePath = "http://localhost";
-
-    MuensterZaehltDartOpenapi({this.dio, Serializers serializers, String basePathOverride, List<Interceptor> interceptors}) {
-        if (dio == null) {
-            BaseOptions options = new BaseOptions(
-                baseUrl: basePathOverride ?? basePath,
-                connectTimeout: 5000,
-                receiveTimeout: 3000,
-            );
-            this.dio = new Dio(options);
-        }
-
-        if (interceptors == null) {
-            this.dio.interceptors.addAll(_defaultInterceptors);
-        } else {
-            this.dio.interceptors.addAll(interceptors);
-        }
-
-        this.serializers = serializers ?? standardSerializers;
-    }
-
-    void setOAuthToken(String name, String token) {
-        (this.dio.interceptors.firstWhere((element) => element is OAuthInterceptor, orElse: null) as OAuthInterceptor)?.tokens[name] = token;
-    }
-
-    void setBasicAuth(String name, String username, String password) {
-        (this.dio.interceptors.firstWhere((element) => element is BasicAuthInterceptor, orElse: null) as BasicAuthInterceptor)?.authInfo[name] = BasicAuthInfo(username, password);
-    }
-
-    void setApiKey(String name, String apiKey) {
-        (this.dio.interceptors.firstWhere((element) => element is ApiKeyAuthInterceptor, orElse: null) as ApiKeyAuthInterceptor)?.apiKeys[name] = apiKey;
-    }
-
-
-    /**
-    * Get DefaultApi instance, base route and serializer can be overridden by a given but be careful,
-    * by doing that all interceptors will not be executed
-    */
-    DefaultApi getDefaultApi() {
-    return DefaultApi(dio, serializers);
-    }
-
-
-}
+ApiClient defaultApiClient = ApiClient();

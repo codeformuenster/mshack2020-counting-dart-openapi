@@ -9,15 +9,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createCountCountsPost**](DefaultApi.md#createCountCountsPost) | **post** /counts/ | Create Count
-[**createCountTtnPaxCountsPost**](DefaultApi.md#createCountTtnPaxCountsPost) | **post** /ttn_pax_counts/ | Create Count
-[**readCountCountsCountIdGet**](DefaultApi.md#readCountCountsCountIdGet) | **get** /counts/{count_id} | Read Count
-[**readCountIdsCountsGet**](DefaultApi.md#readCountIdsCountsGet) | **get** /counts | Read Count Ids
-[**readRootGet**](DefaultApi.md#readRootGet) | **get** / | Read Root
+[**createCountCountsPost**](DefaultApi.md#createCountCountsPost) | **POST** /counts/ | Create Count
+[**createCountTtnPaxCountsPost**](DefaultApi.md#createCountTtnPaxCountsPost) | **POST** /ttn_pax_counts/ | Create Count
+[**readCountCountsCountIdGet**](DefaultApi.md#readCountCountsCountIdGet) | **GET** /counts/{count_id} | Read Count
+[**readCountIdsCountsGet**](DefaultApi.md#readCountIdsCountsGet) | **GET** /counts | Read Count Ids
+[**readRootGet**](DefaultApi.md#readRootGet) | **GET** / | Read Root
 
 
 # **createCountCountsPost**
-> Object createCountCountsPost(countParameter)
+> AnyType createCountCountsPost(countParameter)
 
 Create Count
 
@@ -27,8 +27,8 @@ Insert new count into database.  Args:      long (float): Longitude of count    
 ```dart
 import 'package:muensterZaehltDartOpenapi/api.dart';
 
-var api_instance = new DefaultApi();
-var countParameter = new CountParameter(); // CountParameter | 
+var api_instance = DefaultApi();
+var countParameter = CountParameter(); // CountParameter | 
 
 try { 
     var result = api_instance.createCountCountsPost(countParameter);
@@ -46,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -60,7 +60,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createCountTtnPaxCountsPost**
-> Object createCountTtnPaxCountsPost(tTNHTTPIntegrationParameter)
+> AnyType createCountTtnPaxCountsPost(tTNHTTPIntegrationParameter)
 
 Create Count
 
@@ -70,8 +70,8 @@ Endpoint for TTN HTTP integration sending pax counter data.
 ```dart
 import 'package:muensterZaehltDartOpenapi/api.dart';
 
-var api_instance = new DefaultApi();
-var tTNHTTPIntegrationParameter = new TTNHTTPIntegrationParameter(); // TTNHTTPIntegrationParameter | 
+var api_instance = DefaultApi();
+var tTNHTTPIntegrationParameter = TTNHTTPIntegrationParameter(); // TTNHTTPIntegrationParameter | 
 
 try { 
     var result = api_instance.createCountTtnPaxCountsPost(tTNHTTPIntegrationParameter);
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -103,7 +103,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **readCountCountsCountIdGet**
-> Object readCountCountsCountIdGet(countId)
+> AnyType readCountCountsCountIdGet(countId)
 
 Read Count
 
@@ -113,7 +113,7 @@ Read count for a given ID.  Args:      count_id (int): ID of count to be read  R
 ```dart
 import 'package:muensterZaehltDartOpenapi/api.dart';
 
-var api_instance = new DefaultApi();
+var api_instance = DefaultApi();
 var countId = 56; // int | 
 
 try { 
@@ -128,11 +128,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **countId** | **int**|  | [default to null]
+ **countId** | **int**|  | 
 
 ### Return type
 
-[**Object**](Object.md)
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -146,7 +146,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **readCountIdsCountsGet**
-> Object readCountIdsCountsGet()
+> AnyType readCountIdsCountsGet()
 
 Read Count Ids
 
@@ -156,7 +156,7 @@ Get all count ids
 ```dart
 import 'package:muensterZaehltDartOpenapi/api.dart';
 
-var api_instance = new DefaultApi();
+var api_instance = DefaultApi();
 
 try { 
     var result = api_instance.readCountIdsCountsGet();
@@ -171,7 +171,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Object**](Object.md)
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -185,7 +185,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **readRootGet**
-> Object readRootGet()
+> AnyType readRootGet()
 
 Read Root
 
@@ -193,7 +193,7 @@ Read Root
 ```dart
 import 'package:muensterZaehltDartOpenapi/api.dart';
 
-var api_instance = new DefaultApi();
+var api_instance = DefaultApi();
 
 try { 
     var result = api_instance.readRootGet();
@@ -208,7 +208,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Object**](Object.md)
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
