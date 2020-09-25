@@ -1,0 +1,4 @@
+# Config options for the dart-dio generator
+pubName: muensterZaehltDartOpenapi
+pubVersion: 0.0.1
+pubDescription: "DART openapi client for https://counting-backend.codeformuenster.org/"
