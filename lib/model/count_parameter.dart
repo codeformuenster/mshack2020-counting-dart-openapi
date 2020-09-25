@@ -1,73 +1,31 @@
-part of muensterZaehltDartOpenapi.api;
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-class CountParameter {
-  
-  num long;
-  
-  num lat;
-  
-  int count;
-  
-  String timestamp;
+part 'count_parameter.g.dart';
 
-  CountParameter({
-    @required this.long,
-    @required this.lat,
-    @required this.count,
-    @required this.timestamp,
-  });
+abstract class CountParameter implements Built<CountParameter, CountParameterBuilder> {
 
-  @override
-  String toString() {
-    return 'CountParameter[long=$long, lat=$lat, count=$count, timestamp=$timestamp, ]';
-  }
+    
+        @nullable
+    @BuiltValueField(wireName: r'long')
+    num get long;
+    
+        @nullable
+    @BuiltValueField(wireName: r'lat')
+    num get lat;
+    
+        @nullable
+    @BuiltValueField(wireName: r'count')
+    int get count;
+    
+        @nullable
+    @BuiltValueField(wireName: r'timestamp')
+    String get timestamp;
 
-  CountParameter.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    long = (json['long'] == null) ?
-      null :
-      json['long'].toDouble();
-    lat = (json['lat'] == null) ?
-      null :
-      json['lat'].toDouble();
-    count = json['count'];
-    timestamp = json['timestamp'];
-  }
+    // Boilerplate code needed to wire-up generated code
+    CountParameter._();
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (long != null)
-      json['long'] = long;
-    if (lat != null)
-      json['lat'] = lat;
-    if (count != null)
-      json['count'] = count;
-    if (timestamp != null)
-      json['timestamp'] = timestamp;
-    return json;
-  }
-
-  static List<CountParameter> listFromJson(List<dynamic> json) {
-    return json == null ? List<CountParameter>() : json.map((value) => CountParameter.fromJson(value)).toList();
-  }
-
-  static Map<String, CountParameter> mapFromJson(Map<String, dynamic> json) {
-    final map = Map<String, CountParameter>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = CountParameter.fromJson(value));
-    }
-    return map;
-  }
-
-  // maps a json object with a list of CountParameter-objects as value to a dart map
-  static Map<String, List<CountParameter>> mapListFromJson(Map<String, dynamic> json) {
-    final map = Map<String, List<CountParameter>>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) {
-        map[key] = CountParameter.listFromJson(value);
-      });
-    }
-    return map;
-  }
+    factory CountParameter([updates(CountParameterBuilder b)]) = _$CountParameter;
+    static Serializer<CountParameter> get serializer => _$countParameterSerializer;
 }
 

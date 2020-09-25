@@ -1,300 +1,269 @@
-part of muensterZaehltDartOpenapi.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
-
+import 'package:muensterZaehltDartOpenapi/model/ttnhttp_integration_parameter.dart';
+import 'package:muensterZaehltDartOpenapi/model/http_validation_error.dart';
+import 'package:muensterZaehltDartOpenapi/model/count_parameter.dart';
 
 class DefaultApi {
-  final ApiClient apiClient;
+    final Dio _dio;
+    Serializers _serializers;
 
-  DefaultApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
+    DefaultApi(this._dio, this._serializers);
 
-  /// Create Count with HTTP info returned
-  ///
-  /// Insert new count into database.  Args:      long (float): Longitude of count      lat (float): Latitude of count      count (int): Count value      timestamp (str): Timestamp in ISO8601 notation
-  Future<Response> createCountCountsPostWithHttpInfo(CountParameter countParameter) async {
-    Object postBody = countParameter;
+        /// Create Count
+        ///
+        /// Insert new count into database.  Args:      long (float): Longitude of count      lat (float): Latitude of count      count (int): Count value      timestamp (str): Timestamp in ISO8601 notation
+        Future<Response<Object>>createCountCountsPost(CountParameter countParameter,{ CancelToken cancelToken, Map<String, String> headers, ProgressCallback onSendProgress, ProgressCallback onReceiveProgress,}) async {
 
-    // verify required params are set
-    if(countParameter == null) {
-     throw ApiException(400, "Missing required param: countParameter");
-    }
+        String _path = "/counts/";
 
-    // create path and map variables
-    String path = "/counts/".replaceAll("{format}","json");
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    List<String> contentTypes = ["application/json"];
+        List<String> contentTypes = ["application/json"];
 
-    String nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
-    List<String> authNames = [];
 
-    if(nullableContentType != null && nullableContentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
+            var serializedBody = _serializers.serialize(countParameter);
+            var jsoncountParameter = json.encode(serializedBody);
+            bodyData = jsoncountParameter;
 
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             nullableContentType,
-                                             authNames);
-    return response;
-  }
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+            ).then((response) {
 
-  /// Create Count
-  ///
-  ///CountParameter countParameter  (required):
-  ///    
-  /// Insert new count into database.  Args:      long (float): Longitude of count      lat (float): Latitude of count      count (int): Count value      timestamp (str): Timestamp in ISO8601 notation
-  Future<AnyType> createCountCountsPost(CountParameter countParameter) async {
-    Response response = await createCountCountsPostWithHttpInfo(countParameter);
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'AnyType') as AnyType;
-    } else {
-      return null;
-    }
-  }
+                var serializer = _serializers.serializerForType(Object);
+                var data = _serializers.deserializeWith<Object>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Create Count with HTTP info returned
-  ///
-  /// Endpoint for TTN HTTP integration sending pax counter data.     
-  Future<Response> createCountTtnPaxCountsPostWithHttpInfo(TTNHTTPIntegrationParameter tTNHTTPIntegrationParameter) async {
-    Object postBody = tTNHTTPIntegrationParameter;
+            return Response<Object>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Create Count
+        ///
+        /// Endpoint for TTN HTTP integration sending pax counter data.     
+        Future<Response<Object>>createCountTtnPaxCountsPost(TTNHTTPIntegrationParameter tTNHTTPIntegrationParameter,{ CancelToken cancelToken, Map<String, String> headers, ProgressCallback onSendProgress, ProgressCallback onReceiveProgress,}) async {
 
-    // verify required params are set
-    if(tTNHTTPIntegrationParameter == null) {
-     throw ApiException(400, "Missing required param: tTNHTTPIntegrationParameter");
-    }
+        String _path = "/ttn_pax_counts/";
 
-    // create path and map variables
-    String path = "/ttn_pax_counts/".replaceAll("{format}","json");
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    List<String> contentTypes = ["application/json"];
+        List<String> contentTypes = ["application/json"];
 
-    String nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
-    List<String> authNames = [];
 
-    if(nullableContentType != null && nullableContentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
+            var serializedBody = _serializers.serialize(tTNHTTPIntegrationParameter);
+            var jsontTNHTTPIntegrationParameter = json.encode(serializedBody);
+            bodyData = jsontTNHTTPIntegrationParameter;
 
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             nullableContentType,
-                                             authNames);
-    return response;
-  }
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+            ).then((response) {
 
-  /// Create Count
-  ///
-  ///TTNHTTPIntegrationParameter tTNHTTPIntegrationParameter  (required):
-  ///    
-  /// Endpoint for TTN HTTP integration sending pax counter data.     
-  Future<AnyType> createCountTtnPaxCountsPost(TTNHTTPIntegrationParameter tTNHTTPIntegrationParameter) async {
-    Response response = await createCountTtnPaxCountsPostWithHttpInfo(tTNHTTPIntegrationParameter);
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'AnyType') as AnyType;
-    } else {
-      return null;
-    }
-  }
+                var serializer = _serializers.serializerForType(Object);
+                var data = _serializers.deserializeWith<Object>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Read Count with HTTP info returned
-  ///
-  /// Read count for a given ID.  Args:      count_id (int): ID of count to be read  Returns:      Count: Count entry
-  Future<Response> readCountCountsCountIdGetWithHttpInfo(int countId) async {
-    Object postBody;
+            return Response<Object>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Read Count
+        ///
+        /// Read count for a given ID.  Args:      count_id (int): ID of count to be read  Returns:      Count: Count entry
+        Future<Response<Object>>readCountCountsCountIdGet(int countId,{ CancelToken cancelToken, Map<String, String> headers, ProgressCallback onSendProgress, ProgressCallback onReceiveProgress,}) async {
 
-    // verify required params are set
-    if(countId == null) {
-     throw ApiException(400, "Missing required param: countId");
-    }
+        String _path = "/counts/{count_id}".replaceAll("{" r'count_id' "}", countId.toString());
 
-    // create path and map variables
-    String path = "/counts/{count_id}".replaceAll("{format}","json").replaceAll("{" + "count_id" + "}", countId.toString());
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    List<String> contentTypes = [];
+        List<String> contentTypes = [];
 
-    String nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
-    List<String> authNames = [];
 
-    if(nullableContentType != null && nullableContentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
 
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             nullableContentType,
-                                             authNames);
-    return response;
-  }
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+            ).then((response) {
 
-  /// Read Count
-  ///
-  ///int countId  (required):
-  ///    
-  /// Read count for a given ID.  Args:      count_id (int): ID of count to be read  Returns:      Count: Count entry
-  Future<AnyType> readCountCountsCountIdGet(int countId) async {
-    Response response = await readCountCountsCountIdGetWithHttpInfo(countId);
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'AnyType') as AnyType;
-    } else {
-      return null;
-    }
-  }
+                var serializer = _serializers.serializerForType(Object);
+                var data = _serializers.deserializeWith<Object>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Read Count Ids with HTTP info returned
-  ///
-  /// Get all count ids 
-  Future<Response> readCountIdsCountsGetWithHttpInfo() async {
-    Object postBody;
+            return Response<Object>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Read Count Ids
+        ///
+        /// Get all count ids 
+        Future<Response<Object>>readCountIdsCountsGet({ CancelToken cancelToken, Map<String, String> headers, ProgressCallback onSendProgress, ProgressCallback onReceiveProgress,}) async {
 
-    // verify required params are set
+        String _path = "/counts";
 
-    // create path and map variables
-    String path = "/counts".replaceAll("{format}","json");
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    List<String> contentTypes = [];
+        List<String> contentTypes = [];
 
-    String nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
-    List<String> authNames = [];
 
-    if(nullableContentType != null && nullableContentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
 
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             nullableContentType,
-                                             authNames);
-    return response;
-  }
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+            ).then((response) {
 
-  /// Read Count Ids
-  ///
-  /// Get all count ids 
-  Future<AnyType> readCountIdsCountsGet() async {
-    Response response = await readCountIdsCountsGetWithHttpInfo();
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'AnyType') as AnyType;
-    } else {
-      return null;
-    }
-  }
+                var serializer = _serializers.serializerForType(Object);
+                var data = _serializers.deserializeWith<Object>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Read Root with HTTP info returned
-  ///
-  /// 
-  Future<Response> readRootGetWithHttpInfo() async {
-    Object postBody;
+            return Response<Object>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Read Root
+        ///
+        /// 
+        Future<Response<Object>>readRootGet({ CancelToken cancelToken, Map<String, String> headers, ProgressCallback onSendProgress, ProgressCallback onReceiveProgress,}) async {
 
-    // verify required params are set
+        String _path = "/";
 
-    // create path and map variables
-    String path = "/".replaceAll("{format}","json");
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    List<String> contentTypes = [];
+        List<String> contentTypes = [];
 
-    String nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
-    List<String> authNames = [];
 
-    if(nullableContentType != null && nullableContentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
 
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             nullableContentType,
-                                             authNames);
-    return response;
-  }
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+            ).then((response) {
 
-  /// Read Root
-  ///
-  /// 
-  Future<AnyType> readRootGet() async {
-    Response response = await readRootGetWithHttpInfo();
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'AnyType') as AnyType;
-    } else {
-      return null;
-    }
-  }
+                var serializer = _serializers.serializerForType(Object);
+                var data = _serializers.deserializeWith<Object>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-}
+            return Response<Object>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        }

@@ -1,73 +1,31 @@
-part of muensterZaehltDartOpenapi.api;
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-class TTNPayloadFields {
-  
-  num longitude;
-  
-  num latitude;
-  
-  int wifi;
-  
-  String time;
+part 'ttn_payload_fields.g.dart';
 
-  TTNPayloadFields({
-    @required this.longitude,
-    @required this.latitude,
-    @required this.wifi,
-    @required this.time,
-  });
+abstract class TTNPayloadFields implements Built<TTNPayloadFields, TTNPayloadFieldsBuilder> {
 
-  @override
-  String toString() {
-    return 'TTNPayloadFields[longitude=$longitude, latitude=$latitude, wifi=$wifi, time=$time, ]';
-  }
+    
+        @nullable
+    @BuiltValueField(wireName: r'longitude')
+    num get longitude;
+    
+        @nullable
+    @BuiltValueField(wireName: r'latitude')
+    num get latitude;
+    
+        @nullable
+    @BuiltValueField(wireName: r'wifi')
+    int get wifi;
+    
+        @nullable
+    @BuiltValueField(wireName: r'time')
+    String get time;
 
-  TTNPayloadFields.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    longitude = (json['longitude'] == null) ?
-      null :
-      json['longitude'].toDouble();
-    latitude = (json['latitude'] == null) ?
-      null :
-      json['latitude'].toDouble();
-    wifi = json['wifi'];
-    time = json['time'];
-  }
+    // Boilerplate code needed to wire-up generated code
+    TTNPayloadFields._();
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (longitude != null)
-      json['longitude'] = longitude;
-    if (latitude != null)
-      json['latitude'] = latitude;
-    if (wifi != null)
-      json['wifi'] = wifi;
-    if (time != null)
-      json['time'] = time;
-    return json;
-  }
-
-  static List<TTNPayloadFields> listFromJson(List<dynamic> json) {
-    return json == null ? List<TTNPayloadFields>() : json.map((value) => TTNPayloadFields.fromJson(value)).toList();
-  }
-
-  static Map<String, TTNPayloadFields> mapFromJson(Map<String, dynamic> json) {
-    final map = Map<String, TTNPayloadFields>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = TTNPayloadFields.fromJson(value));
-    }
-    return map;
-  }
-
-  // maps a json object with a list of TTNPayloadFields-objects as value to a dart map
-  static Map<String, List<TTNPayloadFields>> mapListFromJson(Map<String, dynamic> json) {
-    final map = Map<String, List<TTNPayloadFields>>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) {
-        map[key] = TTNPayloadFields.listFromJson(value);
-      });
-    }
-    return map;
-  }
+    factory TTNPayloadFields([updates(TTNPayloadFieldsBuilder b)]) = _$TTNPayloadFields;
+    static Serializer<TTNPayloadFields> get serializer => _$tTNPayloadFieldsSerializer;
 }
 
